@@ -1,0 +1,41 @@
+<h1>Lista de compras</h1>
+<p>Organize aqui a sua lista de compras!</p>
+
+<form>
+    <mat-form-field appearance="fill">
+        <mat-label>Digite o item</mat-label>
+        <input matInput placeholder="Digite o item" name="nome" [(ngModel)]="nomeNovoProduto"/>
+        <mat-icon matSuffix (click)="addProduto()">add_shopping_cart</mat-icon>
+    </mat-form-field>
+</form>
+
+<h2 style="color: #25C;">Para comprar</h2>
+
+<ul>
+    @for (p of produtos; track p.id) {
+        @if (!p.comprado) {
+            <mat-checkbox style="margin-right: 1.5em;" (click)="alternarComprado(p)">{{ p.nome }}</mat-checkbox>
+            <button mat-mini-fab (click)="editar(p)">
+                <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-mini-fab (click)="deletar(p)">
+                <mat-icon>delete</mat-icon>
+            </button>
+            <br/>
+        }
+    }
+</ul>
+
+<h2 style="color: #C11;">Comprados</h2>
+
+<ul>
+    @for (p of produtos; track p.id) {
+        @if (p.comprado) {
+            <mat-checkbox (click)="alternarComprado(p)" style="margin-right: 1.5em;" [checked]="true" [disabled]="true">{{ p.nome }}</mat-checkbox>
+            <button mat-mini-fab (click)="deletar(p)">
+                <mat-icon>delete</mat-icon>
+            </button>
+            <br/>
+        }
+    }
+</ul>

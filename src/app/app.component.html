@@ -1,3 +1,22 @@
 <main>
-  <router-outlet/>
+  <ng-container *ngIf="(auth.isAuthenticated$ | async)">
+    {{ (auth.user$ | async)?.sub }}
+    <button
+      (click)="auth.logout({ logoutParams: { returnTo: document.location.origin } })"
+      >
+      Log out
+    </button>
+    <router-outlet/>
+  </ng-container>
+
+  <ng-container
+    *ngIf="!(auth.isAuthenticated$ | async)"
+    >
+    <p>Você não está logado.</p>
+    <button
+      (click)="auth.loginWithRedirect()"
+      >
+      Logar
+    </button>
+  </ng-container>
 </main>
